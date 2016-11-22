@@ -18,24 +18,14 @@
 
 @property(nonatomic,strong)NSTimer *timer;
 
-@property(nonatomic,assign)NSInteger pastTime;
+@property(nonatomic,assign)NSTimeInterval enterBackgroundTime;
 
 @end
 
 
 @implementation BackgorundTimer
 
-+(BackgorundTimer *)timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(id)userInfo repeats:(BOOL)yesOrNo initWithBackgroundMode:(BOOL)yes{
-    BackgorundTimer *this = [[BackgorundTimer alloc]init];
-    this.timer = [NSTimer scheduledTimerWithTimeInterval:ti target:aTarget selector:aSelector userInfo:userInfo repeats:yesOrNo];
-    this.background = yes;
-    if(yes){
-        [this addObserve];
-    }
-    return this;
-}
-
-+(BackgorundTimer *)initWithTimeInterval:(NSTimeInterval)ti startTime:(NSInteger)startTime targetTime:(NSInteger)targetTime timerType:(TimerType)type repeats:(BOOL)yesOrNo userInfo:(id)userInfo backgroundMode:(BOOL)yes{
++(BackgorundTimer *)initWithTimeInterval:(NSTimeInterval)ti startTime:(NSTimeInterval)startTime targetTime:(NSTimeInterval)targetTime timerType:(TimerType)type repeats:(BOOL)yesOrNo userInfo:(id)userInfo backgroundMode:(BOOL)yes{
     BackgorundTimer *this = [[BackgorundTimer alloc]init];
     this.increseType = type;
     this.duration = ti;
@@ -46,20 +36,41 @@
     if(yes){
         [this addObserve];
     }
+    this.timer = [NSTimer scheduledTimerWithTimeInterval:this.duration target:this selector:@selector(startCount) userInfo:this.userInfo repeats:this.repeat];
+//    [this.timer fire];
     return this;
     
 }
 
 -(void)start{
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.duration target:self selector:@selector(startCount) userInfo:self.userInfo repeats:self.repeat];
     [self.timer setFireDate:[NSDate distantPast]];
-    [self.timer fire];
-    
 }
 
 -(void)startCount{
-
+    if (self.increseType==TimerTypeIncrese) {
+        self.time += self.duration;
+        if (self.excuteTimeBlock) {
+            self.excuteTimeBlock(self.time);
+        }
+        if (self.time>=self.targetTime) {
+            [self invidateTimer];
+            if (self.targetTimeBlock) {
+                self.targetTimeBlock();
+            }
+        }
+    }else{
+        self.time -= self.duration;
+        if (self.excuteTimeBlock) {
+            self.excuteTimeBlock(self.time);
+        }
+        if (self.time <= self.targetTime) {
+            [self invidateTimer];
+            if (self.targetTimeBlock) {
+                self.targetTimeBlock();
+            }
+        }
+    }
 }
 
 -(void)pasue{
@@ -88,13 +99,14 @@
 }
 
 -(void)enterBackground:(NSNotification *)notice{
-    NSLog(@"enterBackground");
+    self.enterBackgroundTime = [[NSDate date] timeIntervalSince1970];
     [self pasue];
 }
 
 
 -(void)enterForeground:(NSNotification *)notice{
-    NSLog(@"enterForeground");
+    NSTimeInterval newIn = [[NSDate date]timeIntervalSince1970];
+    self.time += newIn - self.enterBackgroundTime;
     [self start];
 }
 

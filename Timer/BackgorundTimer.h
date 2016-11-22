@@ -16,25 +16,26 @@ typedef enum : NSUInteger {
 NS_ASSUME_NONNULL_BEGIN
 @interface BackgorundTimer : NSObject
 
-+(BackgorundTimer *)initWithTimeInterval:(NSTimeInterval)ti startTime:(NSInteger)startTime targetTime:(NSInteger)targetTime timerType:(TimerType)type repeats:(BOOL)yesOrNo userInfo:(nullable id)userInfo backgroundMode:(BOOL)yes;
++(BackgorundTimer *)initWithTimeInterval:(NSTimeInterval)ti startTime:(NSTimeInterval)startTime targetTime:(NSTimeInterval)targetTime timerType:(TimerType)type repeats:(BOOL)yesOrNo userInfo:(nullable id)userInfo backgroundMode:(BOOL)yes;
 
-+(BackgorundTimer *)timerWithTimeInterval:(NSTimeInterval)ti  target:(id)aTarget selector:(SEL)aSelector userInfo:(nullable id)userInfo repeats:(BOOL)yesOrNo initWithBackgroundMode:(BOOL)yes;
 -(void)start;
 -(void)pasue;
 -(void)invidateTimer;
 
-@property(nonatomic,assign)NSInteger time;
+@property(nonatomic,assign)NSTimeInterval time;
 
 @property(nonatomic,assign)TimerType increseType;
 
 // seconds
-@property(nonatomic,assign)NSInteger duration;
+@property(nonatomic,assign)NSTimeInterval duration;
 //when time reaches the targettime ,stop timer  if needed.
-@property(nonatomic,assign)NSInteger targetTime;
+@property(nonatomic,assign)NSTimeInterval targetTime;
 
 @property(nonatomic,strong)NSDictionary *userInfo;
 
 @property(nonatomic,copy)void(^targetTimeBlock)();
+
+@property(nonatomic,copy)void(^excuteTimeBlock)(NSTimeInterval excuteTime);
 
 @end
 NS_ASSUME_NONNULL_END
