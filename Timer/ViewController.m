@@ -55,20 +55,20 @@
         weakSelf.showLa.text = [NSString stringWithFormat:@"time is %.0f",excuteTime];
     };
     
-//    _timer1 = [BackgorundTimer initWithTimeInterval:1 startTime:60 targetTime:40 timerType:TimerTypeDecrese repeats:YES userInfo:nil backgroundMode:YES];
-//    _timer1.targetTimeBlock = ^() {
-//        NSLog(@"count down finshed");
-//    };
-//    _timer1.excuteTimeBlock = ^(NSTimeInterval excuteTime){
-//        weakSelf.showLa1.text = [NSString stringWithFormat:@"time is %.0f",excuteTime];
-//    };
-//    _timer2 = [BackgorundTimer initWithTimeInterval:0.02 startTime:100 targetTime:110 timerType:TimerTypeIncrese repeats:YES userInfo:nil backgroundMode:YES];
-//    _timer2.targetTimeBlock = ^() {
-//        NSLog(@"timer2 count down finshed");
-//    };
-//    _timer2.excuteTimeBlock = ^(NSTimeInterval excuteTime){
-//        weakSelf.showLa2.text = [NSString stringWithFormat:@"time is %f",excuteTime];
-//    };
+    _timer1 = [BackgorundTimer initWithTimeInterval:1 startTime:60 targetTime:50 timerType:TimerTypeDecrese repeats:YES userInfo:nil backgroundMode:YES];
+    _timer1.targetTimeBlock = ^() {
+        NSLog(@"count down finshed");
+    };
+    _timer1.excuteTimeBlock = ^(NSTimeInterval excuteTime){
+        weakSelf.showLa1.text = [NSString stringWithFormat:@"time is %.0f",excuteTime];
+    };
+    _timer2 = [BackgorundTimer initWithTimeInterval:0.02 startTime:100 targetTime:110 timerType:TimerTypeIncrese repeats:YES userInfo:nil backgroundMode:YES];
+    _timer2.targetTimeBlock = ^() {
+        NSLog(@"timer2 count down finshed");
+    };
+    _timer2.excuteTimeBlock = ^(NSTimeInterval excuteTime){
+        weakSelf.showLa2.text = [NSString stringWithFormat:@"time is %f",excuteTime];
+    };
 
 
 }

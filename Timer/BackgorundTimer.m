@@ -106,7 +106,12 @@
 
 -(void)enterForeground:(NSNotification *)notice{
     NSTimeInterval newIn = [[NSDate date]timeIntervalSince1970];
-    self.time += newIn - self.enterBackgroundTime;
+    if (self.increseType==TimerTypeIncrese) {
+        self.time += newIn - self.enterBackgroundTime;
+    }else{
+        self.time -= newIn - self.enterBackgroundTime;
+    }
+        
     [self start];
 }
 

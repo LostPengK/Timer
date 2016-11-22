@@ -22,20 +22,21 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)pasue;
 -(void)invidateTimer;
 
-@property(nonatomic,assign)NSTimeInterval time;
+@property(nonatomic,assign) NSTimeInterval time;
 
-@property(nonatomic,assign)TimerType increseType;
+@property(nonatomic,assign) TimerType increseType;
 
 // seconds
-@property(nonatomic,assign)NSTimeInterval duration;
+@property(nonatomic,assign) NSTimeInterval duration;
+
 //when time reaches the targettime ,stop timer  if needed.
-@property(nonatomic,assign)NSTimeInterval targetTime;
+@property(nonatomic,assign) NSTimeInterval targetTime;
 
-@property(nonatomic,strong)NSDictionary *userInfo;
+@property(nonatomic,strong) NSDictionary *userInfo;
 
-@property(nonatomic,copy)void(^targetTimeBlock)();
+@property(nonatomic,copy) void(^targetTimeBlock)();
 
-@property(nonatomic,copy)void(^excuteTimeBlock)(NSTimeInterval excuteTime);
+@property(nonatomic,copy) void(^excuteTimeBlock)(NSTimeInterval excuteTime);
 
 @end
 NS_ASSUME_NONNULL_END
