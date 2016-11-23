@@ -37,22 +37,22 @@
         [this addObserve];
     }
     this.timer = [NSTimer scheduledTimerWithTimeInterval:this.duration target:this selector:@selector(startCount) userInfo:this.userInfo repeats:this.repeat];
-//    [this.timer fire];
+    [[NSRunLoop currentRunLoop]addTimer:this.timer forMode:NSRunLoopCommonModes];
+    [this.timer fire];
     return this;
     
 }
 
 -(void)start{
-    
     [self.timer setFireDate:[NSDate distantPast]];
 }
 
 -(void)startCount{
+    if (self.excuteTimeBlock) {
+        self.excuteTimeBlock(self.time);
+    }
     if (self.increseType==TimerTypeIncrese) {
         self.time += self.duration;
-        if (self.excuteTimeBlock) {
-            self.excuteTimeBlock(self.time);
-        }
         if (self.time>=self.targetTime) {
             [self invidateTimer];
             if (self.targetTimeBlock) {
@@ -61,9 +61,6 @@
         }
     }else{
         self.time -= self.duration;
-        if (self.excuteTimeBlock) {
-            self.excuteTimeBlock(self.time);
-        }
         if (self.time <= self.targetTime) {
             [self invidateTimer];
             if (self.targetTimeBlock) {
@@ -111,7 +108,7 @@
     }else{
         self.time -= newIn - self.enterBackgroundTime;
     }
-        
+    
     [self start];
 }
 
